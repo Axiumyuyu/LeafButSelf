@@ -1,0 +1,16 @@
+--- a/net/minecraft/world/level/block/LadderBlock.java
++++ b/net/minecraft/world/level/block/LadderBlock.java
+@@ -50,6 +_,13 @@
+ 
+     @Override
+     protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
++        // Axium start - per-world update suppression
++        if (level instanceof net.minecraft.server.level.ServerLevel){
++            if(((net.minecraft.server.level.ServerLevel) level).paperConfig().updates.suppressBlockUpdates){
++                return true;
++            }
++        }
++        // Axium end
+         Direction direction = state.getValue(FACING);
+         return this.canAttachTo(level, pos.relative(direction.getOpposite()), direction);
+     }

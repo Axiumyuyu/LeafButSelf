@@ -1,0 +1,16 @@
+--- a/net/minecraft/world/level/block/CreakingHeartBlock.java
++++ b/net/minecraft/world/level/block/CreakingHeartBlock.java
+@@ -173,6 +_,13 @@
+ 
+     @Override
+     public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
++        // Axium start - per-world update suppression
++        if (level instanceof net.minecraft.server.level.ServerLevel){
++            if(((net.minecraft.server.level.ServerLevel) level).paperConfig().updates.suppressBlockUpdates){
++                return state;
++            }
++        }
++        // Axium end
+         if (level.getBlockEntity(pos) instanceof CreakingHeartBlockEntity creakingHeartBlockEntity) {
+             creakingHeartBlockEntity.removeProtector(player.damageSources().playerAttack(player));
+             this.tryAwardExperience(player, state, level, pos);

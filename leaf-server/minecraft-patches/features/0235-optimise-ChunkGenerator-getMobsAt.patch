@@ -30,10 +30,10 @@ index 471f743105613c4d72f87dbc96a08de581f8ca40..261771c2531942b7bdf49ca1de1f09cf
  
      public StructureCheckResult checkStructurePresence(ChunkPos chunkPos, Structure structure, StructurePlacement placement, boolean skipKnownStructures) {
 diff --git a/net/minecraft/world/level/chunk/ChunkGenerator.java b/net/minecraft/world/level/chunk/ChunkGenerator.java
-index c14cd39f62b3a17874d449e3cac013e92f89251d..d5457d99578c64e8cc5c27ec8372f28837875063 100644
+index 5b8302777db94477cf42e837b0f6d53fbe76f614..babb8963713e54473d72aee4825e9eabe023e8b7 100644
 --- a/net/minecraft/world/level/chunk/ChunkGenerator.java
 +++ b/net/minecraft/world/level/chunk/ChunkGenerator.java
-@@ -495,22 +495,24 @@ public abstract class ChunkGenerator {
+@@ -505,22 +505,24 @@ public abstract class ChunkGenerator {
      public WeightedList<MobSpawnSettings.SpawnerData> getMobsAt(Holder<Biome> biome, StructureManager structureManager, MobCategory category, BlockPos pos) {
          Map<Structure, LongSet> allStructuresAt = structureManager.getAllStructuresAt(pos);
  

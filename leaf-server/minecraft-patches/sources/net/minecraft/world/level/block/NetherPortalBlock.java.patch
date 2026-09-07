@@ -1,0 +1,16 @@
+--- a/net/minecraft/world/level/block/NetherPortalBlock.java
++++ b/net/minecraft/world/level/block/NetherPortalBlock.java
+@@ -102,6 +_,13 @@
+         BlockState neighborState,
+         RandomSource random
+     ) {
++        // Axium start - per-world update suppression
++        if (level instanceof net.minecraft.server.level.ServerLevel){
++            if(((net.minecraft.server.level.ServerLevel) level).paperConfig().updates.suppressBlockUpdates){
++                return state;
++            }
++        }
++        // Axium end
+         Direction.Axis axis = direction.getAxis();
+         Direction.Axis axis1 = state.getValue(AXIS);
+         boolean flag = axis1 != axis && axis.isHorizontal();

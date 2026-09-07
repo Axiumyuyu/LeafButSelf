@@ -1,0 +1,59 @@
+--- a/net/minecraft/world/level/storage/loot/functions/ExplorationMapFunction.java
++++ b/net/minecraft/world/level/storage/loot/functions/ExplorationMapFunction.java
+@@ -3,8 +_,10 @@
+ import com.mojang.serialization.Codec;
+ import com.mojang.serialization.MapCodec;
+ import com.mojang.serialization.codecs.RecordCodecBuilder;
++
+ import java.util.List;
+ import java.util.Set;
++
+ import net.minecraft.core.BlockPos;
+ import net.minecraft.core.Holder;
+ import net.minecraft.core.registries.Registries;
+@@ -40,7 +_,7 @@
+                     MapDecorationType.CODEC
+                         .optionalFieldOf("decoration", DEFAULT_DECORATION)
+                         .forGetter(explorationMapFunction -> explorationMapFunction.mapDecoration),
+-                    Codec.BYTE.optionalFieldOf("zoom", (byte)2).forGetter(explorationMapFunction -> explorationMapFunction.zoom),
++                    Codec.BYTE.optionalFieldOf("zoom", (byte) 2).forGetter(explorationMapFunction -> explorationMapFunction.zoom),
+                     Codec.INT.optionalFieldOf("search_radius", 50).forGetter(explorationMapFunction -> explorationMapFunction.searchRadius),
+                     Codec.BOOL.optionalFieldOf("skip_existing_chunks", true).forGetter(explorationMapFunction -> explorationMapFunction.skipKnownStructures)
+                 )
+@@ -102,6 +_,36 @@
+                     MapItem.renderBiomePreviewMap(level, itemStack);
+                     MapItemSavedData.addTargetDecoration(itemStack, blockPos, "+", this.mapDecoration);
+                     return itemStack;
++                } else {
++                    net.minecraft.resources.ResourceKey<net.minecraft.world.level.storage.loot.LootTable> fallbackKey =
++                        net.minecraft.resources.ResourceKey.create(
++                            net.minecraft.core.registries.Registries.LOOT_TABLE,
++                            net.minecraft.resources.Identifier.parse("minecraft:chests/map_fallback") // 根据具体映射可能为 .of("minecraft", "...") 或 .fromNamespaceAndPath
++                        );
++
++                    // 2. get() 方法在 1.21+ 只需要传入 ResourceKey
++                    // 2. 获取到的是包装了 LootTable 的 Reference
++                    java.util.Optional<net.minecraft.core.Holder.Reference<net.minecraft.world.level.storage.loot.LootTable>> fallbackHolderOpt =
++                        context.getResolver().get(fallbackKey);
++
++                    if (fallbackHolderOpt.isPresent()) {
++                        // [关键修复] 调用 .value() 解包拿到真正的 LootTable 实例
++                        net.minecraft.world.level.storage.loot.LootTable fallbackTable = fallbackHolderOpt.get().value();
++
++                        // 3. 构建干净的 LootParams
++                        net.minecraft.world.level.storage.loot.LootParams fallbackParams =
++                            new net.minecraft.world.level.storage.loot.LootParams.Builder(context.getLevel())
++                                .create(net.minecraft.world.level.storage.loot.parameters.LootContextParamSets.EMPTY);
++
++                        // 4. 调用 getRandomItems
++                        it.unimi.dsi.fastutil.objects.ObjectArrayList<net.minecraft.world.item.ItemStack> generatedLoot =
++                            fallbackTable.getRandomItems(fallbackParams);
++
++                        // 返回战利品表生成的第一件物品
++                        if (!generatedLoot.isEmpty()) {
++                            return generatedLoot.get(0);
++                        }
++                    }
+                 }
+             }
+ 

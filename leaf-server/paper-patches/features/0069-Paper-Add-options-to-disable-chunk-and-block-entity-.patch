@@ -10,10 +10,10 @@ Paper commit: https://github.com/PaperMC/Paper/commit/acfe105b9dd64f4b3179ce2575
 Backported from Paper 26.1.2
 
 diff --git a/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java b/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
-index 31338ff8bf53fba34182fb34216407e6ea42f853..59d9d00f7526409cce03b774aff1e88cfa26e71a 100644
+index f4bfb3564842624a9b343c8c91ba84074ceabd23..86777806779fbc9c3b107518d818746b1e941a5d 100644
 --- a/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
 +++ b/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
-@@ -488,6 +488,14 @@ public class WorldConfiguration extends ConfigurationPart {
+@@ -494,6 +494,14 @@ public class WorldConfiguration extends ConfigurationPart {
      public class UnsupportedSettings extends ConfigurationPart {
          public boolean fixInvulnerableEndCrystalExploit = true;
          public boolean disableWorldTickingWhenEmpty = false;

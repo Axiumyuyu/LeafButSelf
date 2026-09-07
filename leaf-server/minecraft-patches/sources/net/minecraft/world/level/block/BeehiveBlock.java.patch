@@ -1,0 +1,16 @@
+--- a/net/minecraft/world/level/block/BeehiveBlock.java
++++ b/net/minecraft/world/level/block/BeehiveBlock.java
+@@ -285,6 +_,13 @@
+ 
+     @Override
+     public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
++        // Axium start - per-world update suppression
++        if (level instanceof net.minecraft.server.level.ServerLevel){
++            if(((net.minecraft.server.level.ServerLevel) level).paperConfig().updates.suppressBlockUpdates){
++                return state;
++            }
++        }
++        // Axium end
+         if (level instanceof ServerLevel serverLevel
+             && player.preventsBlockDrops()
+             && serverLevel.getGameRules().get(GameRules.BLOCK_DROPS)

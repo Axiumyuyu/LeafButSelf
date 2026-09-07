@@ -1,0 +1,25 @@
+--- a/net/minecraft/world/entity/player/Player.java
++++ b/net/minecraft/world/entity/player/Player.java
+@@ -268,7 +_,7 @@
+             }
+ 
+             if (!this.level().isClientSide()
+-                && !this.level().environmentAttributes().getValue(EnvironmentAttributes.BED_RULE, this.position()).canSleep(this.level())) {
++                && false) {
+                 this.stopSleepInBed(false, true);
+             }
+         } else if (this.sleepCounter > 0) {
+@@ -1626,7 +_,12 @@
+     @Override
+     public void makeStuckInBlock(BlockState state, Vec3 motionMultiplier) {
+         if (!this.abilities.flying) {
+-            super.makeStuckInBlock(state, motionMultiplier);
++            org.bukkit.entity.Player bukkitPlayer = (org.bukkit.entity.Player) this.getBukkitEntity();
++            org.bukkit.NamespacedKey key = new org.bukkit.NamespacedKey("minecraft", "ignore_cobweb");
++
++            if (!bukkitPlayer.getPersistentDataContainer().has(key)) {
++                super.makeStuckInBlock(state, motionMultiplier);
++            }
+         }
+ 
+         this.tryResetCurrentImpulseContext();

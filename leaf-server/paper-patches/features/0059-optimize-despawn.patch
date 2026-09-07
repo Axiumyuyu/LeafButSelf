@@ -5,10 +5,10 @@ Subject: [PATCH] optimize despawn
 
 
 diff --git a/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java b/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
-index 9f28cddda94d87fccc2bcc73db350e2459a5a63a..31338ff8bf53fba34182fb34216407e6ea42f853 100644
+index 7adeb50acb55dc2a37f467ee87f14b6655b76c68..f4bfb3564842624a9b343c8c91ba84074ceabd23 100644
 --- a/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
 +++ b/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
-@@ -180,7 +180,7 @@ public class WorldConfiguration extends ConfigurationPart {
+@@ -186,7 +186,7 @@ public class WorldConfiguration extends ConfigurationPart {
              @MergeMap
              public Reference2IntMap<MobCategory> spawnLimits = Util.make(new Reference2IntOpenHashMap<>(NaturalSpawner.SPAWNING_CATEGORIES.length), map -> Arrays.stream(NaturalSpawner.SPAWNING_CATEGORIES).forEach(mobCategory -> map.put(mobCategory, -1)));
              @MergeMap

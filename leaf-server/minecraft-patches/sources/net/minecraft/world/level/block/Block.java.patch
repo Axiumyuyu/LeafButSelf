@@ -1,0 +1,16 @@
+--- a/net/minecraft/world/level/block/Block.java
++++ b/net/minecraft/world/level/block/Block.java
+@@ -544,6 +_,13 @@
+     }
+ 
+     public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
++        // Axium start - per-world update suppression
++        if (level instanceof net.minecraft.server.level.ServerLevel){
++            if(((net.minecraft.server.level.ServerLevel) level).paperConfig().updates.suppressBlockUpdates){
++                return state;
++            }
++        }
++        // Axium end
+         this.spawnDestroyParticles(level, player, pos, state);
+         if (state.is(BlockTags.GUARDED_BY_PIGLINS) && level instanceof ServerLevel serverLevel) {
+             PiglinAi.angerNearbyPiglins(serverLevel, player, false);

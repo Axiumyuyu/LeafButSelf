@@ -1,0 +1,86 @@
+--- a/net/minecraft/world/level/levelgen/feature/EndPodiumFeature.java
++++ b/net/minecraft/world/level/levelgen/feature/EndPodiumFeature.java
+@@ -2,11 +_,13 @@
+ 
+ import net.minecraft.core.BlockPos;
+ import net.minecraft.core.Direction;
++import net.minecraft.resources.Identifier;
+ import net.minecraft.world.level.WorldGenLevel;
+ import net.minecraft.world.level.block.Block;
+ import net.minecraft.world.level.block.Blocks;
+ import net.minecraft.world.level.block.WallTorchBlock;
+ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
++import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+ 
+ public class EndPodiumFeature extends Feature<NoneFeatureConfiguration> {
+     public static final int PODIUM_RADIUS = 4;
+@@ -30,6 +_,69 @@
+         BlockPos blockPos = context.origin();
+         WorldGenLevel worldGenLevel = context.level();
+ 
++        var structureManager = worldGenLevel.getLevel().getServer().getStructureManager();
++        String templateName = this.active ? "exit_portal_activated" : "exit_portal";
++        Identifier templateId = Identifier.fromNamespaceAndPath("minecraft", templateName);
++        var optionalTemplate = structureManager.get(templateId);
++
++        if (optionalTemplate.isPresent()) {
++            var template = optionalTemplate.get();
++            var size = template.getSize();
++
++            int offsetX = -(size.getX() / 2);
++            // 结构中从下往上第二层必须对应原版返回传送门中基岩底座
++            int offsetY = -2;
++            int offsetZ = -(size.getZ() / 2);
++            BlockPos placePos = blockPos.offset(offsetX, offsetY, offsetZ);
++
++            StructurePlaceSettings settings = new StructurePlaceSettings();
++
++            // =========================================================
++            // 终极解耦：基于图纸差异的清场逻辑 (Diff-and-Drop)
++            // =========================================================
++            if (this.active) {
++                // 1. 获取结构模板中的第一个调色板（静态 NBT 结构通常只有一个调色板）
++                // 注：不同版本/映射下可能是 template.palettes.get(0).blocks() 或直接有 getter
++                var blockInfos = template.palettes.get(0).blocks();
++
++                for (var info : blockInfos) {
++                    // 2. 将图纸内的相对坐标转换为世界中的绝对坐标
++                    BlockPos worldPos = placePos.offset(info.pos());
++
++                    // 3. 获取图纸中即将放置的方块，以及世界中当前存在的方块
++                    var targetState = info.state();
++                    var currentState = worldGenLevel.getBlockState(worldPos);
++
++                    // 4. 跳过结构空位 (Structure Void 代表不修改该位置的方块)
++                    if (targetState.is(net.minecraft.world.level.block.Blocks.STRUCTURE_VOID)) {
++                        continue;
++                    }
++
++                    // 5. 差异比对：如果当前方块不是空气，且与即将放置的图纸方块不同，则击碎掉落
++                    if (!currentState.isAir() && !currentState.is(targetState.getBlock())) {
++                        // true 代表破坏并掉落物品
++                        worldGenLevel.destroyBlock(worldPos, true, null);
++                    }
++                }
++            }
++            // =========================================================
++
++            // 最后，将结构实体化到世界中，直接覆盖（安全的，因为会阻碍覆盖的物品都已经被合法掉落了）
++            template.placeInWorld(
++                worldGenLevel,
++                placePos,
++                placePos,
++                settings,
++                worldGenLevel.getRandom(),
++                Block.UPDATE_CLIENTS
++            );
++
++            return true;
++        }
++
++        // =========================================================
++        // 分支 B：兜底策略 (Fallback) - 未找到结构，执行原版硬编码生成
++        // =========================================================
+         for (BlockPos blockPos1 : BlockPos.betweenClosed(
+             new BlockPos(blockPos.getX() - 4, blockPos.getY() - 1, blockPos.getZ() - 4),
+             new BlockPos(blockPos.getX() + 4, blockPos.getY() + 32, blockPos.getZ() + 4)

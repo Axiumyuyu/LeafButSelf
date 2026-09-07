@@ -1050,7 +1050,7 @@ index 5e7f0429f8e6441b21994e92c4ecc67a4b71abd7..8d65ed0f74d84026868a1824e3512cc4
          void sendToTrackingPlayers(Packet<? super ClientGamePacketListener> packet);
  
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 7d7ab0ec6f86e593a84dfb9a9595bfbda8e7fcae..ce0b87d86e5271e3279bcf734c366a0e4dd9800c 100644
+index 349b9f58de916bca2886aae47de531aca24493f7..1df47f43a39b8d67c54c71e0556917498f7cd9fe 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
 @@ -237,6 +237,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
@@ -1061,7 +1061,7 @@ index 7d7ab0ec6f86e593a84dfb9a9595bfbda8e7fcae..ce0b87d86e5271e3279bcf734c366a0e
  
      @Override
      public @Nullable LevelChunk getChunkIfLoaded(int x, int z) {
-@@ -1062,6 +1063,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -1096,6 +1097,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
          this.debugSynchronizers.tick(this.server.debugSubscribers());
          profilerFiller.pop();
          this.environmentAttributes().invalidateTickCache();
@@ -1107,7 +1107,7 @@ index e8e713b4e62e0afd82f447b9dc53ec54489cc71e..2e7c404e3808c39c0835e1e39fd238af
          return true;
      }
 diff --git a/net/minecraft/world/entity/LivingEntity.java b/net/minecraft/world/entity/LivingEntity.java
-index bc8c3bfdc5c4d2a30453947a6e1a825ee14860d3..a158c6c40e75a7bbbaed70d609ccf47aa7afbfb3 100644
+index 77c9f5c549a9f8dc25a4122f422a6dd6d67d9d4f..2b8812c78d080a1c1c6fb821d2983ecc939e8c9e 100644
 --- a/net/minecraft/world/entity/LivingEntity.java
 +++ b/net/minecraft/world/entity/LivingEntity.java
 @@ -1032,6 +1032,13 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin

@@ -1,0 +1,16 @@
+--- a/net/minecraft/world/level/block/RedStoneWireBlock.java
++++ b/net/minecraft/world/level/block/RedStoneWireBlock.java
+@@ -255,6 +_,13 @@
+ 
+     @Override
+     public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
++        // Axium start - per-world update suppression
++        if (level instanceof net.minecraft.server.level.ServerLevel){
++            if(((net.minecraft.server.level.ServerLevel) level).paperConfig().updates.suppressBlockUpdates){
++                return true;
++            }
++        }
++        // Axium end
+         BlockPos blockPos = pos.below();
+         BlockState blockState = level.getBlockState(blockPos);
+         return this.canSurviveOn(level, blockPos, blockState);

@@ -1,0 +1,16 @@
+--- a/net/minecraft/world/level/block/SmallDripleafBlock.java
++++ b/net/minecraft/world/level/block/SmallDripleafBlock.java
+@@ -81,6 +_,13 @@
+ 
+     @Override
+     protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
++        // Axium start - per-world update suppression
++        if (level instanceof net.minecraft.server.level.ServerLevel){
++            if(((net.minecraft.server.level.ServerLevel) level).paperConfig().updates.suppressBlockUpdates){
++                return true;
++            }
++        }
++        // Axium end
+         if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
+             return super.canSurvive(state, level, pos);
+         } else {

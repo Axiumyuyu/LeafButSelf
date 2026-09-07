@@ -31,10 +31,10 @@ vain. Throttling spawn attempts in suspected spawnproof chunks improves
 performance without noticeably advantaging or disadvantaging the mob farm.
 
 diff --git a/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java b/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
-index d34e627f8b6711d443553af74113d096b783b36d..9f28cddda94d87fccc2bcc73db350e2459a5a63a 100644
+index e098753a504388ff760e904fae48d62819742798..7adeb50acb55dc2a37f467ee87f14b6655b76c68 100644
 --- a/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
 +++ b/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
-@@ -185,6 +185,17 @@ public class WorldConfiguration extends ConfigurationPart {
+@@ -191,6 +191,17 @@ public class WorldConfiguration extends ConfigurationPart {
              @MergeMap
              public Reference2IntMap<MobCategory> ticksPerSpawn = Util.make(new Reference2IntOpenHashMap<>(NaturalSpawner.SPAWNING_CATEGORIES.length), map -> Arrays.stream(NaturalSpawner.SPAWNING_CATEGORIES).forEach(mobCategory -> map.put(mobCategory, -1)));
  

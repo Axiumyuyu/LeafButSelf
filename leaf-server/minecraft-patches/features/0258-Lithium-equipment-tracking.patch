@@ -327,7 +327,7 @@ index 1e00a7bd89d885cabb4b9ca3c86fbd8cd93cebf5..e8e713b4e62e0afd82f447b9dc53ec54
 +    // Leaf end - Lithium - equipment tracking
  }
 diff --git a/net/minecraft/world/entity/LivingEntity.java b/net/minecraft/world/entity/LivingEntity.java
-index 91d12b11c5b291a4d440f2c0a090d18cef85be30..57c5360f5030e832fe7b5e0e2f0411be7eb23a2a 100644
+index 5d693a39c0d0ff052193b6c326bf45109ebd512f..1d6cd38c852579b528dc14a74bc721d7586e6c6d 100644
 --- a/net/minecraft/world/entity/LivingEntity.java
 +++ b/net/minecraft/world/entity/LivingEntity.java
 @@ -154,7 +154,7 @@ import org.bukkit.event.entity.EntityRegainHealthEvent;
@@ -348,7 +348,7 @@ index 91d12b11c5b291a4d440f2c0a090d18cef85be30..57c5360f5030e832fe7b5e0e2f0411be
              EnchantmentHelper.tickEffects(serverLevel, this);
          }
  
-@@ -3654,6 +3654,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -3656,6 +3656,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
      public void detectEquipmentUpdates() {
          Map<EquipmentSlot, ItemStack> map = this.collectEquipmentChanges();
          if (map != null) {
@@ -356,7 +356,7 @@ index 91d12b11c5b291a4d440f2c0a090d18cef85be30..57c5360f5030e832fe7b5e0e2f0411be
              this.handleHandSwap(map);
              if (!map.isEmpty()) {
                  this.handleEquipmentChanges(map);
-@@ -3662,6 +3663,10 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -3664,6 +3665,10 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
      }
  
      private @Nullable Map<EquipmentSlot, ItemStack> collectEquipmentChanges() {
@@ -367,7 +367,7 @@ index 91d12b11c5b291a4d440f2c0a090d18cef85be30..57c5360f5030e832fe7b5e0e2f0411be
          Map<EquipmentSlot, ItemStack> map = null;
          // Paper start - EntityEquipmentChangedEvent
          record EquipmentChangeImpl(org.bukkit.inventory.ItemStack oldItem, org.bukkit.inventory.ItemStack newItem) implements io.papermc.paper.event.entity.EntityEquipmentChangedEvent.EquipmentChange {
-@@ -5106,4 +5111,16 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -5108,4 +5113,16 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
  
      public record Fallsounds(SoundEvent small, SoundEvent big) {
      }
@@ -400,10 +400,10 @@ index 9d5b4309884f9d5fa42cfd46f96502b1bb7a4dc8..9ab14c1d61665358b4e3cdafeffe0672
  
              return;
 diff --git a/net/minecraft/world/item/ItemStack.java b/net/minecraft/world/item/ItemStack.java
-index 1e57a16c754245d51499e7630f417a51f41e5006..e20f3e99a8f56622d86af4acbd7aecdb0fa4e8e1 100644
+index 2b5c7585599c5c53021418bfe01125dcc9cea0dd..0e55be70476a4cd2436ae4219b0a6681abbdca98 100644
 --- a/net/minecraft/world/item/ItemStack.java
 +++ b/net/minecraft/world/item/ItemStack.java
-@@ -102,7 +102,7 @@ import org.apache.commons.lang3.mutable.MutableBoolean;
+@@ -105,7 +105,7 @@ import org.apache.commons.lang3.mutable.MutableBoolean;
  import org.jspecify.annotations.Nullable;
  import org.slf4j.Logger;
  
@@ -412,7 +412,7 @@ index 1e57a16c754245d51499e7630f417a51f41e5006..e20f3e99a8f56622d86af4acbd7aecdb
      private static final List<Component> OP_NBT_WARNING = List.of(
          Component.translatable("item.op_warning.line1").withStyle(ChatFormatting.RED, ChatFormatting.BOLD),
          Component.translatable("item.op_warning.line2").withStyle(ChatFormatting.RED),
-@@ -172,6 +172,10 @@ public final class ItemStack implements DataComponentHolder {
+@@ -175,6 +175,10 @@ public final class ItemStack implements DataComponentHolder {
      private @Nullable Item item;
      PatchedDataComponentMap components;
      private @Nullable Entity entityRepresentation;
@@ -423,7 +423,7 @@ index 1e57a16c754245d51499e7630f417a51f41e5006..e20f3e99a8f56622d86af4acbd7aecdb
  
      public static DataResult<ItemStack> validateStrict(ItemStack stack) {
          DataResult<Unit> dataResult = validateComponents(stack.getComponents());
-@@ -1374,6 +1378,21 @@ public final class ItemStack implements DataComponentHolder {
+@@ -1397,6 +1401,21 @@ public final class ItemStack implements DataComponentHolder {
      }
  
      public void setCount(int count) {
@@ -445,7 +445,7 @@ index 1e57a16c754245d51499e7630f417a51f41e5006..e20f3e99a8f56622d86af4acbd7aecdb
          this.count = count;
      }
  
-@@ -1442,4 +1461,87 @@ public final class ItemStack implements DataComponentHolder {
+@@ -1465,4 +1484,87 @@ public final class ItemStack implements DataComponentHolder {
              .or(() -> Optional.ofNullable(this.getItem().getItemDamageSource(attacker)))
              .orElseGet(fallback);
      }

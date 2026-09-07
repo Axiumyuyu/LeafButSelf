@@ -1,0 +1,32 @@
+--- a/net/minecraft/world/entity/ai/attributes/Attributes.java
++++ b/net/minecraft/world/entity/ai/attributes/Attributes.java
+@@ -7,9 +_,9 @@
+ 
+ public class Attributes {
+     public static final double DEFAULT_ATTACK_SPEED = 4.0;
+-    public static final Holder<Attribute> ARMOR = register("armor", new RangedAttribute("attribute.name.armor", 0.0, 0.0, 30.0).setSyncable(true));
++    public static final Holder<Attribute> ARMOR = register("armor", new RangedAttribute("attribute.name.armor", 0.0, 0.0, 60.0).setSyncable(true));
+     public static final Holder<Attribute> ARMOR_TOUGHNESS = register(
+-        "armor_toughness", new RangedAttribute("attribute.name.armor_toughness", 0.0, 0.0, 20.0).setSyncable(true)
++        "armor_toughness", new RangedAttribute("attribute.name.armor_toughness", 0.0, 0.0, 30.0).setSyncable(true)
+     );
+     public static final Holder<Attribute> ATTACK_DAMAGE = register("attack_damage", new RangedAttribute("attribute.name.attack_damage", 2.0, 0.0, org.spigotmc.SpigotConfig.attackDamage)); // Spigot
+     public static final Holder<Attribute> ATTACK_KNOCKBACK = register("attack_knockback", new RangedAttribute("attribute.name.attack_knockback", 0.0, 0.0, 5.0));
+@@ -26,7 +_,7 @@
+         "burning_time", new RangedAttribute("attribute.name.burning_time", 1.0, 0.0, 1024.0).setSyncable(true).setSentiment(Attribute.Sentiment.NEGATIVE)
+     );
+     public static final Holder<Attribute> CAMERA_DISTANCE = register(
+-        "camera_distance", new RangedAttribute("attribute.name.camera_distance", 4.0, 0.0, 32.0).setSyncable(true)
++        "camera_distance", new RangedAttribute("attribute.name.camera_distance", 4.0, 0.0, 64.0).setSyncable(true)
+     );
+     public static final Holder<Attribute> EXPLOSION_KNOCKBACK_RESISTANCE = register(
+         "explosion_knockback_resistance", new RangedAttribute("attribute.name.explosion_knockback_resistance", 0.0, 0.0, 1.0).setSyncable(true)
+@@ -83,7 +_,7 @@
+         "spawn_reinforcements", new RangedAttribute("attribute.name.spawn_reinforcements", 0.0, 0.0, 1.0)
+     );
+     public static final Holder<Attribute> STEP_HEIGHT = register(
+-        "step_height", new RangedAttribute("attribute.name.step_height", 0.6, 0.0, 10.0).setSyncable(true)
++        "step_height", new RangedAttribute("attribute.name.step_height", 0.6, 0.0, 16.0).setSyncable(true)
+     );
+     public static final Holder<Attribute> SUBMERGED_MINING_SPEED = register(
+         "submerged_mining_speed", new RangedAttribute("attribute.name.submerged_mining_speed", 0.2, 0.0, 20.0).setSyncable(true)

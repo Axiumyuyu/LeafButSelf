@@ -153,10 +153,10 @@ index d0ca03ace2db83192d35850d29336990f01bc6fe..ca070adc64ac557b8393770bdfd6a396
                  if (!itemBySlot.isEmpty()) {
                      list.add(Pair.of(equipmentSlot, itemBySlot.copy()));
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 5b047f14d7dec11ee367034e9cd8962fd8abc13b..d60b197c5c0ef61b7614e07270c81d3d1cad7e7e 100644
+index a8878ab6558789e71b2bc778f8c6d73e8b1925ff..d0d11b805c61b9f01e107bd3dff78bdf93bfa7c4 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -1435,7 +1435,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -1469,7 +1469,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
  
      public static List<Entity> getCurrentlyTickingEntities() {
          Entity ticking = currentlyTickingEntity.get();
@@ -289,10 +289,10 @@ index b383836c200ca9f7bd84639367aa81b57868fb25..3af4a6dcc81afaf2860325fe5852c9a9
  
      private static Map<EquipmentSlot, Float> createForAllSlots(List<EquipmentSlot> equipmentSlots, float dropChance) {
 diff --git a/net/minecraft/world/entity/LivingEntity.java b/net/minecraft/world/entity/LivingEntity.java
-index 57701366a1d6667e17494c28a0bb7739cb6772c2..a42d9c3a27c822a252be989238db838119439b39 100644
+index 6e64d98b8f6912b1b65ad1cd2ffae6cc2c4fcc17..0cbcea30d6ca8e7bebf2f4d2de04fa6da8b72803 100644
 --- a/net/minecraft/world/entity/LivingEntity.java
 +++ b/net/minecraft/world/entity/LivingEntity.java
-@@ -3630,7 +3630,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -3632,7 +3632,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
          Map<org.bukkit.inventory.EquipmentSlot, io.papermc.paper.event.entity.EntityEquipmentChangedEvent.EquipmentChange> equipmentChanges = null;
          // Paper end - EntityEquipmentChangedEvent
  
@@ -301,7 +301,7 @@ index 57701366a1d6667e17494c28a0bb7739cb6772c2..a42d9c3a27c822a252be989238db8381
              ItemStack itemStack = this.lastEquipmentItems.get(equipmentSlot);
              ItemStack itemBySlot = this.getItemBySlot(equipmentSlot);
              if (this.equipmentHasChanged(itemStack, itemBySlot)) {
-@@ -3975,7 +3975,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -3977,7 +3977,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
  
      public boolean canGlide() {
          if (!this.onGround() && !this.isPassenger() && !this.hasEffect(MobEffects.LEVITATION)) {
@@ -382,7 +382,7 @@ index ae18b3a78075a72c927b7362bed18d4ec3dc2360..4f4abeed259a736a08444be12f6e39e0
              }
          }
 diff --git a/net/minecraft/world/entity/player/Player.java b/net/minecraft/world/entity/player/Player.java
-index b0d2ddd2b2abf2e2980b9440f7109c32e8606c04..f6370bad11757a3e7a262f57eb993e3b8bd41f2c 100644
+index 4939a4f32b60c349a8aea447ffdff7d932005eca..2fd01dd9f3ad40a2c3d16f5432105873eddc4e45 100644
 --- a/net/minecraft/world/entity/player/Player.java
 +++ b/net/minecraft/world/entity/player/Player.java
 @@ -390,7 +390,7 @@ public abstract class Player extends Avatar implements ContainerUser {
@@ -395,10 +395,10 @@ index b0d2ddd2b2abf2e2980b9440f7109c32e8606c04..f6370bad11757a3e7a262f57eb993e3b
              Equippable equippable = itemBySlot.get(DataComponents.EQUIPPABLE);
              if (itemBySlot.is(item) && equippable != null && equippable.slot() == equipmentSlot) {
 diff --git a/net/minecraft/world/item/ItemStack.java b/net/minecraft/world/item/ItemStack.java
-index d00e73c5d5c71c8b7d58ad4bf3822c7acd138853..06b2a1c83d74c68aa004bc49e855ee24a81e39b8 100644
+index 589d9e49b33a159072e4fd306f4089707256c78e..3c5bb4f3de47e5bf085e418fbb03ac46a208e3de 100644
 --- a/net/minecraft/world/item/ItemStack.java
 +++ b/net/minecraft/world/item/ItemStack.java
-@@ -1221,7 +1221,7 @@ public final class ItemStack implements DataComponentHolder {
+@@ -1224,7 +1224,7 @@ public final class ItemStack implements DataComponentHolder {
  
      private void addAttributeTooltips(Consumer<Component> tooltipAdder, TooltipDisplay tooltipDisplay, @Nullable Player player) {
          if (tooltipDisplay.shows(DataComponents.ATTRIBUTE_MODIFIERS)) {

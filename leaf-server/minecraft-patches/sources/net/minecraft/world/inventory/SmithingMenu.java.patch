@@ -1,0 +1,32 @@
+--- a/net/minecraft/world/inventory/SmithingMenu.java
++++ b/net/minecraft/world/inventory/SmithingMenu.java
+@@ -59,9 +_,11 @@
+         RecipePropertySet recipePropertySet1 = access.propertySet(RecipePropertySet.SMITHING_TEMPLATE);
+         RecipePropertySet recipePropertySet2 = access.propertySet(RecipePropertySet.SMITHING_ADDITION);
+         return ItemCombinerMenuSlotDefinition.create()
+-            .withSlot(0, 8, 48, recipePropertySet1::test)
+-            .withSlot(1, 26, 48, recipePropertySet::test)
+-            .withSlot(2, 44, 48, recipePropertySet2::test)
++            // Axium start - allow any item put
++            .withSlot(0, 8, 48, stack -> true)
++            .withSlot(1, 26, 48, stack -> true)
++            .withSlot(2, 44, 48, stack -> true)
++            //Axium end
+             .withResultSlot(3, 98, 48)
+             .build();
+     }
+@@ -136,9 +_,11 @@
+ 
+     @Override
+     public boolean canMoveIntoInputSlots(ItemStack stack) {
+-        return this.templateItemTest.test(stack) && !this.getSlot(0).hasItem()
+-            || this.baseItemTest.test(stack) && !this.getSlot(1).hasItem()
+-            || this.additionItemTest.test(stack) && !this.getSlot(2).hasItem();
++        // Axium start - allow any item put
++        return !this.getSlot(0).hasItem()
++            || !this.getSlot(1).hasItem()
++            || !this.getSlot(2).hasItem();
++        // Axium end
+     }
+ 
+     public boolean hasRecipeError() {

@@ -1,0 +1,16 @@
+--- a/net/minecraft/world/level/block/CocoaBlock.java
++++ b/net/minecraft/world/level/block/CocoaBlock.java
+@@ -60,6 +_,13 @@
+ 
+     @Override
+     protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
++        // Axium start - per-world update suppression
++        if (level instanceof net.minecraft.server.level.ServerLevel){
++            if(((net.minecraft.server.level.ServerLevel) level).paperConfig().updates.suppressBlockUpdates){
++                return true;
++            }
++        }
++        // Axium end
+         BlockState blockState = level.getBlockState(pos.relative(state.getValue(FACING)));
+         return blockState.is(BlockTags.JUNGLE_LOGS);
+     }

@@ -856,10 +856,10 @@ index 51e9c23436b620c32c4e5a5448fac8ae67c1dcc0..0c177ba57de1401f31f33020e265061e
              if (target != null) {
                  double d = this.distanceToSqr(target.getX(), target.getY(), target.getZ());
 diff --git a/net/minecraft/world/level/block/ShulkerBoxBlock.java b/net/minecraft/world/level/block/ShulkerBoxBlock.java
-index 6c5696ab4981a6d582d4d0f13c9822bf84a5d9f1..5cd93a95091deb045b24c23d75a35a85f8339d53 100644
+index dbbf989968014b32112bcd3e8f8f222100ce9aff..c964121250532f8499743931cebc4b0773adfc1c 100644
 --- a/net/minecraft/world/level/block/ShulkerBoxBlock.java
 +++ b/net/minecraft/world/level/block/ShulkerBoxBlock.java
-@@ -164,9 +164,17 @@ public class ShulkerBoxBlock extends BaseEntityBlock {
+@@ -171,9 +171,17 @@ public class ShulkerBoxBlock extends BaseEntityBlock {
  
      @Override
      protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {

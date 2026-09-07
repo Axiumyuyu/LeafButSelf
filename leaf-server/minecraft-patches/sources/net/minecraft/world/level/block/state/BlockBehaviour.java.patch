@@ -1,0 +1,16 @@
+--- a/net/minecraft/world/level/block/state/BlockBehaviour.java
++++ b/net/minecraft/world/level/block/state/BlockBehaviour.java
+@@ -943,6 +_,13 @@
+         }
+ 
+         public boolean canSurvive(LevelReader level, BlockPos pos) {
++            // Axium start - per-world update suppression
++            if (level instanceof ServerLevel){
++                if (((ServerLevel) level).paperConfig().updates.suppressBlockUpdates){
++                    return true;
++                }
++            }
++            // Axium end
+             return this.getBlock().canSurvive(this.asState(), level, pos);
+         }
+ 

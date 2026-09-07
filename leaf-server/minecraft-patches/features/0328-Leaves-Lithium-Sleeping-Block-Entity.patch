@@ -54,10 +54,10 @@ index 6f01763c178324dd1741b996cd21cb9c23795b71..a724462c46a5ab00f68803e06793dbdc
          }
      }
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 6cd577d631c7c9d094e727e0dc5579db8f62e8ea..3fb0c67855de020b219790f542d25975803d7720 100644
+index 0e354bebfd63b87e5ba510936c59d773ca76b480..e0f4cdc35e89b5fabefee5383fe59c0d2a4c9835 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -2826,6 +2826,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -2885,6 +2885,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
  
          for (TickingBlockEntity tickingBlockEntity : this.blockEntityTickers) {
              BlockPos pos = tickingBlockEntity.getPos();
@@ -269,10 +269,10 @@ index 6f34f71d64febca49ffd52d9df2fac657434737d..e02184d0d52e04b35c4fb3534027bef3
                  ItemStack item = container.getItem(i);
                  if (!item.isEmpty()) {
 diff --git a/net/minecraft/world/item/ItemStack.java b/net/minecraft/world/item/ItemStack.java
-index aa6ae443d5782652357bd94c982cd6d108569567..dca53271eb2deec06ff96bffeb6667387990fbdf 100644
+index c2de2ba34998156dc04febcd4eb1d8c2b596f363..fbc7ee1259e21b63a4cbed62156a04ee3e02e0a5 100644
 --- a/net/minecraft/world/item/ItemStack.java
 +++ b/net/minecraft/world/item/ItemStack.java
-@@ -1053,6 +1053,7 @@ public final class ItemStack implements DataComponentHolder, net.caffeinemc.mods
+@@ -1056,6 +1056,7 @@ public final class ItemStack implements DataComponentHolder, net.caffeinemc.mods
      // CraftBukkit end
  
      public <T> @Nullable T set(DataComponentType<T> component, @Nullable T value) {
@@ -348,10 +348,10 @@ index 43015706d3b3bb5520997adb7a5798468d7ecf42..d298eb6202196f80dede428b76ff349c
          private final LevelAccessor level;
          private final BlockPos pos;
 diff --git a/net/minecraft/world/level/block/DiodeBlock.java b/net/minecraft/world/level/block/DiodeBlock.java
-index d27ca0aa1f0e3675d51ec76f1c482a9bc50971ab..ddb6b3dba945ca3b65d19f79948ec8184d0ae77a 100644
+index c82369faf70017ad33f3916086dc20e01522c0ea..b68c0cf2e70c50ffad4fd21ed0cde5c4408f0e47 100644
 --- a/net/minecraft/world/level/block/DiodeBlock.java
 +++ b/net/minecraft/world/level/block/DiodeBlock.java
-@@ -174,6 +174,7 @@ public abstract class DiodeBlock extends HorizontalDirectionalBlock {
+@@ -181,6 +181,7 @@ public abstract class DiodeBlock extends HorizontalDirectionalBlock {
      @Override
      protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
          this.updateNeighborsInFront(level, pos, state);
@@ -2195,7 +2195,7 @@ index 61b99c895c0e248f0e7c4c634644dcff54a964d9..e751683aa52da7e850f793916fdfb75b
 +    // Leaves end - Lithium Sleeping Block Entity
  }
 diff --git a/net/minecraft/world/level/block/state/BlockBehaviour.java b/net/minecraft/world/level/block/state/BlockBehaviour.java
-index 5e4fa7143b55141c59decfd59c26e9197405cf98..b326d08dc75d01b35162cda95eda8b18b0feac39 100644
+index 9ab40e366fd62b2256fbdfca4c00937697cb7644..aa673f2f252bc8bd785bf1a7d542bd77e7ad514c 100644
 --- a/net/minecraft/world/level/block/state/BlockBehaviour.java
 +++ b/net/minecraft/world/level/block/state/BlockBehaviour.java
 @@ -84,7 +84,7 @@ import net.minecraft.world.phys.shapes.Shapes;

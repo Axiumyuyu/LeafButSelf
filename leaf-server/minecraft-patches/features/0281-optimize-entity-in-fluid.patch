@@ -42,10 +42,10 @@ index 06745483f0e30b17edce80913c39368a84b4b94b..f0bfd55be864e767c2460e1aa7e7a6b1
                      if (fluidState.isEmpty() || !fluidState.is(fluid)) {
                          continue;
 diff --git a/net/minecraft/world/entity/LivingEntity.java b/net/minecraft/world/entity/LivingEntity.java
-index 0d14b344bd6f89d115dc0c396c99502a58109542..309e40fb518e1394d152f33672db7cd070a0b7e3 100644
+index d721d0fb498146287048c4d728be21eca39730e2..f2a0f7eb55654f2cdc3cfb3a507ca318ac1441e2 100644
 --- a/net/minecraft/world/entity/LivingEntity.java
 +++ b/net/minecraft/world/entity/LivingEntity.java
-@@ -3191,7 +3191,14 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -3193,7 +3193,14 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
      }
  
      public void travel(Vec3 travelVector) {

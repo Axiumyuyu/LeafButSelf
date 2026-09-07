@@ -1,0 +1,16 @@
+--- a/net/minecraft/world/level/block/DecoratedPotBlock.java
++++ b/net/minecraft/world/level/block/DecoratedPotBlock.java
+@@ -185,6 +_,13 @@
+ 
+     @Override
+     public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
++        // Axium start - per-world update suppression
++        if (level instanceof net.minecraft.server.level.ServerLevel){
++            if(((net.minecraft.server.level.ServerLevel) level).paperConfig().updates.suppressBlockUpdates){
++                return state;
++            }
++        }
++        // Axium end
+         ItemStack mainHandItem = player.getMainHandItem();
+         BlockState blockState = state;
+         if (mainHandItem.is(ItemTags.BREAKS_DECORATED_POTS) && !EnchantmentHelper.hasTag(mainHandItem, EnchantmentTags.PREVENTS_DECORATED_POT_SHATTERING)) {

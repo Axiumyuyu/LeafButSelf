@@ -1,0 +1,24 @@
+--- a/net/minecraft/world/level/block/BaseTorchBlock.java
++++ b/net/minecraft/world/level/block/BaseTorchBlock.java
+@@ -3,6 +_,7 @@
+ import com.mojang.serialization.MapCodec;
+ import net.minecraft.core.BlockPos;
+ import net.minecraft.core.Direction;
++import net.minecraft.server.level.ServerLevel;
+ import net.minecraft.util.RandomSource;
+ import net.minecraft.world.level.BlockGetter;
+ import net.minecraft.world.level.LevelReader;
+@@ -45,6 +_,13 @@
+ 
+     @Override
+     protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
++        // Axium start - per-world update suppression
++        if (level instanceof ServerLevel){
++            if(((ServerLevel) level).paperConfig().updates.suppressBlockUpdates){
++                return true;
++            }
++        }
++        // Axium end
+         return canSupportCenter(level, pos.below(), Direction.UP);
+     }
+ }

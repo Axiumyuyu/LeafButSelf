@@ -99,10 +99,10 @@ index 19a25ee84a4211256a1dbb614db9ebf2ce53182f..36727fbe3e8435695b83168a7e1561ea
          // Paper start - fix converting txt to json file; convert old users earlier after PlayerList creation but before file load/save
          if (this.convertOldUsers()) {
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 853bb92c034b6361ff8c55daf52f38a226fdae2c..b1b03e3f5930837dc73622f84bef9d8323b01f75 100644
+index b1cb59ac3cc01e7d72630cf630cb70b8bcdecb71..0db0a66f7be9cd9c155573d85b3957527fafcc66 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -618,7 +618,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -652,7 +652,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
          org.bukkit.generator.BiomeProvider biomeProvider // CraftBukkit
      ) {
          // CraftBukkit start

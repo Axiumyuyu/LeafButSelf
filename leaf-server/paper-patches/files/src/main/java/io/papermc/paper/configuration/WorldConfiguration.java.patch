@@ -1,0 +1,15 @@
+--- a/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
++++ b/src/main/java/io/papermc/paper/configuration/WorldConfiguration.java
+@@ -75,6 +_,12 @@
+     private final transient SpigotWorldConfig spigotConfig;
+     private final transient Identifier worldKey;
+ 
++    public UpdatesConfig updates;
++
++    public class UpdatesConfig extends io.papermc.paper.configuration.ConfigurationPart {
++        public boolean suppressBlockUpdates = false;
++    }
++
+     WorldConfiguration(final SpigotWorldConfig spigotConfig, final Identifier worldKey) {
+         this.spigotConfig = spigotConfig;
+         this.worldKey = worldKey;

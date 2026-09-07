@@ -9,10 +9,10 @@ Cache values to reduce allocations.
 The JMH benchmark of this patch can be found in SunBox's `CachedEnumValuesForLoop`
 
 diff --git a/net/minecraft/world/level/block/state/BlockBehaviour.java b/net/minecraft/world/level/block/state/BlockBehaviour.java
-index 4ad288dfa49abd60d9c74e317a493e2b532b97f6..80775acc7500d76663b1bd7a135480cd96c4e295 100644
+index b8530f2369f73e0bb8244426f8584cb546a8c48f..9858030ad949d2e0f3b45067687d82e4e10812f3 100644
 --- a/net/minecraft/world/level/block/state/BlockBehaviour.java
 +++ b/net/minecraft/world/level/block/state/BlockBehaviour.java
-@@ -1047,6 +1047,10 @@ public abstract class BlockBehaviour implements FeatureElement {
+@@ -1054,6 +1054,10 @@ public abstract class BlockBehaviour implements FeatureElement {
          static final class Cache {
              private static final Direction[] DIRECTIONS = Direction.values();
              private static final int SUPPORT_TYPE_COUNT = SupportType.values().length;
@@ -23,7 +23,7 @@ index 4ad288dfa49abd60d9c74e317a493e2b532b97f6..80775acc7500d76663b1bd7a135480cd
              protected final VoxelShape collisionShape;
              protected boolean largeCollisionShape;
              private final boolean[] faceSturdy;
-@@ -1065,7 +1069,7 @@ public abstract class BlockBehaviour implements FeatureElement {
+@@ -1072,7 +1076,7 @@ public abstract class BlockBehaviour implements FeatureElement {
                      );
                  } else {
                      // Leaf start - Remove stream in BlockBehaviour cache blockstate
@@ -32,7 +32,7 @@ index 4ad288dfa49abd60d9c74e317a493e2b532b97f6..80775acc7500d76663b1bd7a135480cd
                          if (this.collisionShape.min(axis) < 0.0 || this.collisionShape.max(axis) > 1.0) {
                              this.largeCollisionShape = true;
                              break;
-@@ -1075,7 +1079,7 @@ public abstract class BlockBehaviour implements FeatureElement {
+@@ -1082,7 +1086,7 @@ public abstract class BlockBehaviour implements FeatureElement {
                      this.faceSturdy = new boolean[DIRECTIONS.length * SUPPORT_TYPE_COUNT];
  
                      for (Direction direction : DIRECTIONS) {

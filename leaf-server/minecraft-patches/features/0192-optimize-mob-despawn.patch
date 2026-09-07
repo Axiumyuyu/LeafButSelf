@@ -5,10 +5,10 @@ Subject: [PATCH] optimize mob despawn
 
 
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 485a9804b8cfe517bdb16da44035a93e4768caef..2f93c3112c9b66b5488e5cd93f79ccfe72e9fec0 100644
+index 795d3dc26db316c6ff2615b0aeda10571ba96b04..64ef089bd648a55814eb4a8f4bb93a3024dcdb58 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -856,6 +856,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -890,6 +890,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
              }
  
              io.papermc.paper.entity.activation.ActivationRange.activateEntities(this); // Paper - EAR
@@ -16,7 +16,7 @@ index 485a9804b8cfe517bdb16da44035a93e4768caef..2f93c3112c9b66b5488e5cd93f79ccfe
              this.entityTickList
                  .forEach(
                      entity -> {
-@@ -863,7 +864,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -897,7 +898,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
                          if (!entity.isRemoved()) {
                              if (!tickRateManager.isEntityFrozen(entity)) {
                                  profilerFiller.push("checkDespawn");
@@ -25,7 +25,7 @@ index 485a9804b8cfe517bdb16da44035a93e4768caef..2f93c3112c9b66b5488e5cd93f79ccfe
                                  profilerFiller.pop();
                                  if (true) { // Paper - rewrite chunk system
                                      Entity vehicle = entity.getVehicle();
-@@ -1027,6 +1028,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -1061,6 +1062,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
      }
      // Paper end - optimise random ticking
  

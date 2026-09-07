@@ -401,7 +401,7 @@ index 551d189457c8a65763476edd84b50c156ac916cc..b295a8b383a3d572e0c499fc0ea27ae1
                  continue;
              }
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 2f93c3112c9b66b5488e5cd93f79ccfe72e9fec0..0cb711e4a6d381c7614f3eaffdcf48f2fc56dde2 100644
+index 64ef089bd648a55814eb4a8f4bb93a3024dcdb58..09479eda6776df2f03f610e03a4c6872ec0a91b8 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
 @@ -194,7 +194,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
@@ -425,7 +425,7 @@ index 2f93c3112c9b66b5488e5cd93f79ccfe72e9fec0..0cb711e4a6d381c7614f3eaffdcf48f2
  
      // CraftBukkit start
      public final LevelStorageSource.LevelStorageAccess levelStorageAccess;
-@@ -713,7 +718,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -747,7 +752,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
          this.sleepStatus = new SleepStatus();
          this.gameEventDispatcher = new GameEventDispatcher(this);
          this.randomSequences = Objects.requireNonNullElseGet(randomSequences, () -> this.getDataStorage().computeIfAbsent(RandomSequences.TYPE));
@@ -434,7 +434,7 @@ index 2f93c3112c9b66b5488e5cd93f79ccfe72e9fec0..0cb711e4a6d381c7614f3eaffdcf48f2
          this.environmentAttributes = EnvironmentAttributeSystem.builder().addDefaultLayers(this).build();
          this.updateSkyBrightness();
          // Paper start - rewrite chunk system
-@@ -733,6 +738,15 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -767,6 +772,15 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
          this.getCraftServer().addWorld(this.getWorld()); // CraftBukkit
          this.preciseTime = this.serverLevelData.getDayTime(); // Purpur - Configurable daylight cycle
          this.realPlayers = Lists.newArrayList(); // Leaves - skip
@@ -450,7 +450,7 @@ index 2f93c3112c9b66b5488e5cd93f79ccfe72e9fec0..0cb711e4a6d381c7614f3eaffdcf48f2
      }
  
      // Paper start
-@@ -770,9 +784,128 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -804,9 +818,128 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
          return this.environmentAttributes;
      }
  
@@ -579,7 +579,7 @@ index 2f93c3112c9b66b5488e5cd93f79ccfe72e9fec0..0cb711e4a6d381c7614f3eaffdcf48f2
          TickRateManager tickRateManager = this.tickRateManager();
          boolean runsNormally = tickRateManager.runsNormally();
          if (runsNormally) {
-@@ -783,6 +916,12 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -817,6 +950,12 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
              profilerFiller.pop();
          }
  
@@ -592,7 +592,7 @@ index 2f93c3112c9b66b5488e5cd93f79ccfe72e9fec0..0cb711e4a6d381c7614f3eaffdcf48f2
          int i = this.getGameRules().get(GameRules.PLAYERS_SLEEPING_PERCENTAGE);
          if (this.purpurConfig.playersSkipNight && this.sleepStatus.areEnoughSleeping(i) && this.sleepStatus.areEnoughDeepSleeping(i, this.players)) { // Purpur - Config for skipping night
              // Paper start - create time skip event - move up calculations
-@@ -888,6 +1027,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -922,6 +1061,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
                                          entity.discard(org.bukkit.event.entity.EntityRemoveEvent.Cause.DISCARD);
                                          // Paper end - Prevent block entity and entity crashes
                                      }
@@ -600,7 +600,7 @@ index 2f93c3112c9b66b5488e5cd93f79ccfe72e9fec0..0cb711e4a6d381c7614f3eaffdcf48f2
                                      this.moonrise$midTickTasks(); // Paper - rewrite chunk system
                                      // Gale end - Airplane - remove lambda from ticking guard - copied from guardEntityTick
                                      profilerFiller.pop();
-@@ -1415,7 +1555,10 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -1449,7 +1589,10 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
              fluidState.tick(this, pos, blockState);
          }
          // Paper start - rewrite chunk system
@@ -612,7 +612,7 @@ index 2f93c3112c9b66b5488e5cd93f79ccfe72e9fec0..0cb711e4a6d381c7614f3eaffdcf48f2
              ((ca.spottedleaf.moonrise.patches.chunk_system.server.ChunkSystemMinecraftServer)this.server).moonrise$executeMidTickTasks();
          }
          // Paper end - rewrite chunk system
-@@ -1428,7 +1571,10 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -1462,7 +1605,10 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
              blockState.tick(this, pos, this.random);
          }
          // Paper start - rewrite chunk system
@@ -624,7 +624,7 @@ index 2f93c3112c9b66b5488e5cd93f79ccfe72e9fec0..0cb711e4a6d381c7614f3eaffdcf48f2
              ((ca.spottedleaf.moonrise.patches.chunk_system.server.ChunkSystemMinecraftServer)this.server).moonrise$executeMidTickTasks();
          }
          // Paper end - rewrite chunk system
-@@ -1699,6 +1845,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -1733,6 +1879,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
      }
  
      private void addPlayer(ServerPlayer player) {
@@ -632,7 +632,7 @@ index 2f93c3112c9b66b5488e5cd93f79ccfe72e9fec0..0cb711e4a6d381c7614f3eaffdcf48f2
          Entity entity = this.getEntity(player.getUUID());
          if (entity != null) {
              LOGGER.warn("Force-added player with duplicate UUID {}", player.getUUID());
-@@ -1711,7 +1858,13 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -1745,7 +1892,13 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
  
      // CraftBukkit start
      private boolean addEntity(Entity entity, org.bukkit.event.entity.CreatureSpawnEvent.@Nullable SpawnReason spawnReason) {
@@ -1112,10 +1112,10 @@ index 19bdb38a69dcdb3d30f08a85b3e9c3d6d723191f..3a0c8dca827f567a00e611461aeb7469
          this.containerId = containerId;
      }
 diff --git a/net/minecraft/world/item/ItemStack.java b/net/minecraft/world/item/ItemStack.java
-index 7f27bccfc559a4d5706ab1cc464e3cec4e754267..1e57a16c754245d51499e7630f417a51f41e5006 100644
+index b25d1f1e8244b421877dac8a96d3c37ab55b7354..2b5c7585599c5c53021418bfe01125dcc9cea0dd 100644
 --- a/net/minecraft/world/item/ItemStack.java
 +++ b/net/minecraft/world/item/ItemStack.java
-@@ -404,8 +404,8 @@ public final class ItemStack implements DataComponentHolder {
+@@ -407,8 +407,8 @@ public final class ItemStack implements DataComponentHolder {
              if (interactionResult.consumesAction() && serverLevel.captureTreeGeneration && !serverLevel.capturedBlockStates.isEmpty()) {
                  serverLevel.captureTreeGeneration = false;
                  org.bukkit.Location location = org.bukkit.craftbukkit.util.CraftLocation.toBukkit(clickedPos, serverLevel);
@@ -1215,10 +1215,10 @@ index 9711efb088bd0da9168e9bcd0496bd7caddd2974..38a9d3c23b9ccdfd38e0454181bde762
                  return value;
              })
 diff --git a/net/minecraft/world/level/block/MushroomBlock.java b/net/minecraft/world/level/block/MushroomBlock.java
-index b11ff87df7b75f2a3065bbed7b13cc52f7df83fc..b1adac6d0303ad2936024461b28e390385dd337c 100644
+index 0c4566e23385036cd77dfca3dfbf43c96a7988dd..09e2ba68f1f9db538c751262da0218559f768ea9 100644
 --- a/net/minecraft/world/level/block/MushroomBlock.java
 +++ b/net/minecraft/world/level/block/MushroomBlock.java
-@@ -93,7 +93,7 @@ public class MushroomBlock extends VegetationBlock implements BonemealableBlock
+@@ -100,7 +100,7 @@ public class MushroomBlock extends VegetationBlock implements BonemealableBlock
              return false;
          } else {
              level.removeBlock(pos, false);
@@ -1228,7 +1228,7 @@ index b11ff87df7b75f2a3065bbed7b13cc52f7df83fc..b1adac6d0303ad2936024461b28e3903
                  return true;
              } else {
 diff --git a/net/minecraft/world/level/block/RedStoneWireBlock.java b/net/minecraft/world/level/block/RedStoneWireBlock.java
-index 6d98bc37d88459d1e0a171b52bbff5810d775c38..ebc43f02c356e94d889e20ed26f66dc216b305a6 100644
+index d6c8b5ec9cef23cd8dfa3799d7690d0a2bba4294..1965d7152cebfe4aa095c687342aae02c6817242 100644
 --- a/net/minecraft/world/level/block/RedStoneWireBlock.java
 +++ b/net/minecraft/world/level/block/RedStoneWireBlock.java
 @@ -65,6 +65,7 @@ public class RedStoneWireBlock extends Block {
@@ -1239,7 +1239,7 @@ index 6d98bc37d88459d1e0a171b52bbff5810d775c38..ebc43f02c356e94d889e20ed26f66dc2
  
      @Override
      public MapCodec<RedStoneWireBlock> codec() {
-@@ -282,7 +283,13 @@ public class RedStoneWireBlock extends Block {
+@@ -289,7 +290,13 @@ public class RedStoneWireBlock extends Block {
              if (orientation != null) {
                  source = pos.relative(orientation.getFront().getOpposite());
              }
@@ -1254,7 +1254,7 @@ index 6d98bc37d88459d1e0a171b52bbff5810d775c38..ebc43f02c356e94d889e20ed26f66dc2
              return;
          }
          updatePowerStrength(worldIn, pos, state, orientation, blockAdded);
-@@ -310,7 +317,13 @@ public class RedStoneWireBlock extends Block {
+@@ -317,7 +324,13 @@ public class RedStoneWireBlock extends Block {
                  // [Space Walker] suppress shape updates and emit those manually to
                  // bypass the new neighbor update stack.
                  if (level.setBlock(pos, state, Block.UPDATE_KNOWN_SHAPE | Block.UPDATE_CLIENTS)) {
@@ -1269,7 +1269,7 @@ index 6d98bc37d88459d1e0a171b52bbff5810d775c38..ebc43f02c356e94d889e20ed26f66dc2
                  }
              }
          }
-@@ -327,10 +340,19 @@ public class RedStoneWireBlock extends Block {
+@@ -334,10 +347,19 @@ public class RedStoneWireBlock extends Block {
      }
  
      public int getBlockSignal(Level level, BlockPos pos) {
@@ -1293,7 +1293,7 @@ index 6d98bc37d88459d1e0a171b52bbff5810d775c38..ebc43f02c356e94d889e20ed26f66dc2
      }
  
      private void checkCornerChangeAt(Level level, BlockPos pos) {
-@@ -421,12 +443,18 @@ public class RedStoneWireBlock extends Block {
+@@ -428,12 +450,18 @@ public class RedStoneWireBlock extends Block {
  
      @Override
      protected int getDirectSignal(BlockState state, BlockGetter level, BlockPos pos, Direction side) {
@@ -1314,7 +1314,7 @@ index 6d98bc37d88459d1e0a171b52bbff5810d775c38..ebc43f02c356e94d889e20ed26f66dc2
              int powerValue = state.getValue(POWER);
              if (powerValue == 0) {
                  return 0;
-@@ -458,7 +486,7 @@ public class RedStoneWireBlock extends Block {
+@@ -465,7 +493,7 @@ public class RedStoneWireBlock extends Block {
  
      @Override
      protected boolean isSignalSource(BlockState state) {

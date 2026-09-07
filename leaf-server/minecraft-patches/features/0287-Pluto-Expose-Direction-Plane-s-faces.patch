@@ -35,10 +35,10 @@ index 45093451fb25ae3bb1e57d2e53c49a1ae666e31e..c228135032b5f74fd1ec96a2cf52aa3e
              }
          }
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 002a2c33ca3a1f6bf5030e1db5ee8c8172fe6de9..7d7ab0ec6f86e593a84dfb9a9595bfbda8e7fcae 100644
+index b04ed7ce19cbe2a0d50122e4390360059f69a201..349b9f58de916bca2886aae47de531aca24493f7 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -1270,7 +1270,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -1304,7 +1304,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
                          // We only need to check blocks that are taller than the minimum step height
                          if (org.purpurmc.purpur.PurpurConfig.smoothSnowAccumulationStep > 0 && layersValue >= org.purpurmc.purpur.PurpurConfig.smoothSnowAccumulationStep) {
                              int layersValueMin = layersValue - org.purpurmc.purpur.PurpurConfig.smoothSnowAccumulationStep;
@@ -161,10 +161,10 @@ index 47f3b008b252678105368dc577ed66353ff50eb3..47df6c8bc4b024463011c9cc380b4336
              BlockState blockState1 = level.getBlockState(blockPos);
              if (blockState1.is(this)) {
 diff --git a/net/minecraft/world/level/block/MossyCarpetBlock.java b/net/minecraft/world/level/block/MossyCarpetBlock.java
-index 3762d833f17d596e04845a3f391423f9c14a878b..af89c9acf7c4400b019b06f02c9cef8fbc9df3b8 100644
+index 52f7a281e3ff0639ec81cac4519b4755f48f1710..22bb7ae14b377ddbd4e833558d0b78b8b711ce6c 100644
 --- a/net/minecraft/world/level/block/MossyCarpetBlock.java
 +++ b/net/minecraft/world/level/block/MossyCarpetBlock.java
-@@ -129,7 +129,7 @@ public class MossyCarpetBlock extends Block implements BonemealableBlock {
+@@ -136,7 +136,7 @@ public class MossyCarpetBlock extends Block implements BonemealableBlock {
          BlockState blockState1 = null;
          tip |= state.getValue(BASE);
  
@@ -173,7 +173,7 @@ index 3762d833f17d596e04845a3f391423f9c14a878b..af89c9acf7c4400b019b06f02c9cef8f
              EnumProperty<WallSide> propertyForFace = getPropertyForFace(direction);
              WallSide wallSide = canSupportAtFace(level, pos, direction) ? (tip ? WallSide.LOW : state.getValue(propertyForFace)) : WallSide.NONE;
              if (wallSide == WallSide.LOW) {
-@@ -194,7 +194,7 @@ public class MossyCarpetBlock extends Block implements BonemealableBlock {
+@@ -201,7 +201,7 @@ public class MossyCarpetBlock extends Block implements BonemealableBlock {
              BlockState blockState1 = Blocks.PALE_MOSS_CARPET.defaultBlockState().setValue(BASE, false);
              BlockState updatedState = getUpdatedState(blockState1, level, pos.above(), true);
  
@@ -196,7 +196,7 @@ index d527a5dcb1986e7284b7b25adca13b825844db95..c894d1e3b9d2397fe161f43fa2fe730d
                  i++;
              }
 diff --git a/net/minecraft/world/level/block/RedStoneWireBlock.java b/net/minecraft/world/level/block/RedStoneWireBlock.java
-index 95dcef271566314e90edf64c271715359eabac1d..a48b7ead585f0a1d0d5420914a7bb3d511d367ff 100644
+index 3b819683f3280584b60dd5949ec4eba975d07f51..b2494b118596959edc7db6ac5c47e8cea27d5ac5 100644
 --- a/net/minecraft/world/level/block/RedStoneWireBlock.java
 +++ b/net/minecraft/world/level/block/RedStoneWireBlock.java
 @@ -157,7 +157,7 @@ public class RedStoneWireBlock extends Block {
@@ -217,7 +217,7 @@ index 95dcef271566314e90edf64c271715359eabac1d..a48b7ead585f0a1d0d5420914a7bb3d5
              RedstoneSide redstoneSide = state.getValue(PROPERTY_BY_DIRECTION.get(direction));
              if (redstoneSide != RedstoneSide.NONE && !level.getBlockState(mutableBlockPos.setWithOffset(pos, direction)).is(this)) {
                  mutableBlockPos.move(Direction.DOWN);
-@@ -376,7 +376,7 @@ public class RedStoneWireBlock extends Block {
+@@ -383,7 +383,7 @@ public class RedStoneWireBlock extends Block {
              }
              // Paper end - optimize redstone
  
@@ -226,7 +226,7 @@ index 95dcef271566314e90edf64c271715359eabac1d..a48b7ead585f0a1d0d5420914a7bb3d5
                  level.updateNeighborsAt(pos.relative(direction), this);
              }
  
-@@ -403,11 +403,11 @@ public class RedStoneWireBlock extends Block {
+@@ -410,11 +410,11 @@ public class RedStoneWireBlock extends Block {
      }
  
      private void updateNeighborsOfNeighboringWires(Level level, BlockPos pos) {
@@ -240,7 +240,7 @@ index 95dcef271566314e90edf64c271715359eabac1d..a48b7ead585f0a1d0d5420914a7bb3d5
              BlockPos blockPos = pos.relative(direction);
              if (level.getBlockState(blockPos).isRedstoneConductor(level, blockPos)) {
                  this.checkCornerChangeAt(level, blockPos.above());
-@@ -511,7 +511,7 @@ public class RedStoneWireBlock extends Block {
+@@ -518,7 +518,7 @@ public class RedStoneWireBlock extends Block {
      public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
          int powerValue = state.getValue(POWER);
          if (powerValue != 0) {
@@ -249,7 +249,7 @@ index 95dcef271566314e90edf64c271715359eabac1d..a48b7ead585f0a1d0d5420914a7bb3d5
                  RedstoneSide redstoneSide = state.getValue(PROPERTY_BY_DIRECTION.get(direction));
                  switch (redstoneSide) {
                      case UP:
-@@ -590,7 +590,7 @@ public class RedStoneWireBlock extends Block {
+@@ -597,7 +597,7 @@ public class RedStoneWireBlock extends Block {
      private void updatesOnShapeChange(Level level, BlockPos pos, BlockState oldState, BlockState newState) {
          Orientation orientation = ExperimentalRedstoneUtils.initialOrientation(level, null, Direction.UP);
  
@@ -285,10 +285,10 @@ index 9e5cf7766848540a5ae2c38522e865a0b4601d00..de37d657d5a6e0866fd296f20bb91c87
                      FluidState fluidState = level.getFluidState(blockPos.relative(direction));
                      if (fluidState.is(FluidTags.WATER) || blockState1.is(Blocks.FROSTED_ICE)) {
 diff --git a/net/minecraft/world/level/block/VineBlock.java b/net/minecraft/world/level/block/VineBlock.java
-index b98e720f3996d88f21f448f1fe967e4d8203170d..3942c4211ad52944362ac65ef1a32cb8d822cee0 100644
+index 2ed58c3b88eac66c964ef06d981c869713810b08..ca6cf0ac96535fce89100c8f87bfaf27f59e2e5f 100644
 --- a/net/minecraft/world/level/block/VineBlock.java
 +++ b/net/minecraft/world/level/block/VineBlock.java
-@@ -125,7 +125,7 @@ public class VineBlock extends Block {
+@@ -132,7 +132,7 @@ public class VineBlock extends Block {
  
          BlockState blockState = null;
  
@@ -297,7 +297,7 @@ index b98e720f3996d88f21f448f1fe967e4d8203170d..3942c4211ad52944362ac65ef1a32cb8
              BooleanProperty propertyForFace = getPropertyForFace(direction);
              if (state.getValue(propertyForFace)) {
                  boolean canSupportAtFace = this.canSupportAtFace(level, pos, direction);
-@@ -215,7 +215,7 @@ public class VineBlock extends Block {
+@@ -222,7 +222,7 @@ public class VineBlock extends Block {
  
                              BlockState blockState1 = state;
  
@@ -306,7 +306,7 @@ index b98e720f3996d88f21f448f1fe967e4d8203170d..3942c4211ad52944362ac65ef1a32cb8
                                  if (random.nextBoolean() || !isAcceptableNeighbour(level, blockPos.relative(clockWise), clockWise)) {
                                      blockState1 = blockState1.setValue(getPropertyForFace(clockWise), false);
                                  }
-@@ -246,7 +246,7 @@ public class VineBlock extends Block {
+@@ -253,7 +253,7 @@ public class VineBlock extends Block {
      }
  
      private BlockState copyRandomFaces(BlockState sourceState, BlockState spreadState, RandomSource random) {
@@ -415,10 +415,10 @@ index c17ff32e575b86c5b0b21689aa250e79cff6cf25..fcc2c7ddce86b3526fddc94ebf974c3d
                          return false;
                      }
 diff --git a/net/minecraft/world/level/levelgen/feature/EndPodiumFeature.java b/net/minecraft/world/level/levelgen/feature/EndPodiumFeature.java
-index f80c3c074c9eef742388b2636d11d895b0712876..4372f9abd26922a2381a9f4eb54e5a06c4e97a45 100644
+index 0b1ff30e1b54a782c686bc9e0e1277d8f509e816..39ea0228698d3b414a15af68d044bc64712bb18a 100644
 --- a/net/minecraft/world/level/levelgen/feature/EndPodiumFeature.java
 +++ b/net/minecraft/world/level/levelgen/feature/EndPodiumFeature.java
-@@ -68,7 +68,7 @@ public class EndPodiumFeature extends Feature<NoneFeatureConfiguration> {
+@@ -133,7 +133,7 @@ public class EndPodiumFeature extends Feature<NoneFeatureConfiguration> {
  
          BlockPos blockPos2 = blockPos.above(2);
  

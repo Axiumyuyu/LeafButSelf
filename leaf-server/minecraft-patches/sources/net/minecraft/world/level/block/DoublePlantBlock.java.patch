@@ -1,0 +1,44 @@
+--- a/net/minecraft/world/level/block/DoublePlantBlock.java
++++ b/net/minecraft/world/level/block/DoublePlantBlock.java
+@@ -48,6 +_,13 @@
+         BlockState neighborState,
+         RandomSource random
+     ) {
++        // Axium start - per-world update suppression
++        if (level instanceof net.minecraft.server.level.ServerLevel){
++            if(((net.minecraft.server.level.ServerLevel) level).paperConfig().updates.suppressBlockUpdates){
++                return state;
++            }
++        }
++        // Axium end
+         DoubleBlockHalf doubleBlockHalf = state.getValue(HALF);
+         if (direction.getAxis() != Direction.Axis.Y
+             || doubleBlockHalf == DoubleBlockHalf.LOWER != (direction == Direction.UP)
+@@ -77,6 +_,13 @@
+ 
+     @Override
+     protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
++        // Axium start - per-world update suppression
++        if (level instanceof net.minecraft.server.level.ServerLevel){
++            if(((net.minecraft.server.level.ServerLevel) level).paperConfig().updates.suppressBlockUpdates){
++                return true;
++            }
++        }
++        // Axium end
+         if (state.getValue(HALF) != DoubleBlockHalf.UPPER) {
+             return super.canSurvive(state, level, pos);
+         } else {
+@@ -97,6 +_,13 @@
+ 
+     @Override
+     public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
++        // Axium start - per-world update suppression
++        if (level instanceof net.minecraft.server.level.ServerLevel){
++            if(((net.minecraft.server.level.ServerLevel) level).paperConfig().updates.suppressBlockUpdates){
++                return state;
++            }
++        }
++        // Axium end
+         if (!level.isClientSide()) {
+             if (player.preventsBlockDrops()) {
+                 preventDropFromBottomPart(level, pos, state, player);

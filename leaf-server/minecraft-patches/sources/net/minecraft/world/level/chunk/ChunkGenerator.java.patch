@@ -1,0 +1,20 @@
+--- a/net/minecraft/world/level/chunk/ChunkGenerator.java
++++ b/net/minecraft/world/level/chunk/ChunkGenerator.java
+@@ -187,7 +_,17 @@
+                     int sectionPosX = SectionPos.blockToSectionCoord(pos.getX());
+                     int sectionPosZ = SectionPos.blockToSectionCoord(pos.getZ());
+ 
++                    long searchStartTime = System.currentTimeMillis();
++                    long maxAllowedTimeMs = 200L;
++
+                     for (int i = 0; i <= radius; i++) {
++
++                        if (System.currentTimeMillis() - searchStartTime > maxAllowedTimeMs) {
++                            // 发生超时，放弃后续更大范围的搜索。
++                            // 直接返回 null 告诉上层没有找到结构，从而触发你的 Fallback 战利品表。
++                            return null;
++                        }
++
+                         boolean flag = false;
+ 
+                         for (Entry<StructurePlacement, Set<Holder<Structure>>> entry1 : list) {

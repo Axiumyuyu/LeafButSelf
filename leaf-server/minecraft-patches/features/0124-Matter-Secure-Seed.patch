@@ -48,10 +48,10 @@ index 98f27aa176fb72bf1ce165309d31b7b8b4bb3ca5..83e02e02aa3a95acdc2bc914307d7577
      }
  
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index aaab81ae642c560ed898189608363e458f88c4af..d2ee918e1fcfdd3bc23b9f17ab9a367a5c0bd42e 100644
+index 257b79dc3ee8d91c9c2980c6abec084fe9accc99..6d98011a3bca7cc93c33c407a873254aab2cb6dc 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -662,6 +662,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -696,6 +696,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
              chunkGenerator = new org.bukkit.craftbukkit.generator.CustomChunkGenerator(this, chunkGenerator, gen);
          }
          // CraftBukkit end
@@ -110,10 +110,10 @@ index 54ddcf92e72b9cbd0eb442e5d0faa83c0cf3b33b..157e5c16bc177f378fa7b0f01282c65c
  
      public @Nullable BlockState setBlockState(BlockPos pos, BlockState state) {
 diff --git a/net/minecraft/world/level/chunk/ChunkGenerator.java b/net/minecraft/world/level/chunk/ChunkGenerator.java
-index 7b98964eb77a619bdaaf5a9d331e3cfe080b52a4..9712ed7f71019d859bfa4979aa8f768127f43620 100644
+index 8438f59105b47f2e8229f4f9dbcb9d3f0aaa4f1c..5ce7f3b9b599e4bcd6514c50bb29466ef8f655f6 100644
 --- a/net/minecraft/world/level/chunk/ChunkGenerator.java
 +++ b/net/minecraft/world/level/chunk/ChunkGenerator.java
-@@ -342,7 +342,11 @@ public abstract class ChunkGenerator {
+@@ -352,7 +352,11 @@ public abstract class ChunkGenerator {
              Registry<Structure> registry = level.registryAccess().lookupOrThrow(Registries.STRUCTURE);
              Map<Integer, List<Structure>> map = registry.stream().collect(Collectors.groupingBy(structure1 -> structure1.step().ordinal()));
              List<FeatureSorter.StepFeatureData> list = this.featuresPerStep.get();
@@ -126,7 +126,7 @@ index 7b98964eb77a619bdaaf5a9d331e3cfe080b52a4..9712ed7f71019d859bfa4979aa8f7681
              long l = worldgenRandom.setDecorationSeed(level.getSeed(), blockPos.getX(), blockPos.getZ());
              Set<Holder<Biome>> set = new ObjectArraySet<>();
              ChunkPos.rangeClosed(sectionPos.chunk(), 1).forEach(chunkPos -> {
-@@ -557,8 +561,15 @@ public abstract class ChunkGenerator {
+@@ -567,8 +571,15 @@ public abstract class ChunkGenerator {
                              } else {
                                  ArrayList<StructureSet.StructureSelectionEntry> list1 = new ArrayList<>(list.size());
                                  list1.addAll(list);

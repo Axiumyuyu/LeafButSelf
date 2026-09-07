@@ -1,0 +1,24 @@
+--- a/net/minecraft/world/level/block/StairBlock.java
++++ b/net/minecraft/world/level/block/StairBlock.java
+@@ -6,6 +_,7 @@
+ import java.util.Map;
+ import net.minecraft.core.BlockPos;
+ import net.minecraft.core.Direction;
++import net.minecraft.server.level.ServerLevel;
+ import net.minecraft.util.RandomSource;
+ import net.minecraft.world.item.context.BlockPlaceContext;
+ import net.minecraft.world.level.BlockGetter;
+@@ -122,6 +_,13 @@
+         BlockState neighborState,
+         RandomSource random
+     ) {
++        // Axium start - per-world update suppression
++        if (level instanceof ServerLevel){
++            if(((ServerLevel) level).paperConfig().updates.suppressBlockUpdates){
++                return state;
++            }
++        }
++        // Axium end
+         if (state.getValue(WATERLOGGED)) {
+             scheduledTickAccess.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+         }

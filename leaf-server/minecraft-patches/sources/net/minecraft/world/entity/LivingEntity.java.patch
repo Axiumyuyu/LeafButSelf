@@ -1,0 +1,13 @@
+--- a/net/minecraft/world/entity/LivingEntity.java
++++ b/net/minecraft/world/entity/LivingEntity.java
+@@ -3006,7 +_,9 @@
+     }
+ 
+     protected void jumpInLiquid(TagKey<Fluid> fluidTag) {
+-        this.setDeltaMovement(this.getDeltaMovement().add(0.0, 0.04F, 0.0));
++        double upwardForce = Math.max(0.0, 0.04 - this.getGravity() + 0.08);
++        // 0.08是基准重力，相当于把额外重力从冲量里扣除
++        this.setDeltaMovement(this.getDeltaMovement().add(0.0, upwardForce, 0.0));
+     }
+ 
+     protected float getWaterSlowDown() {

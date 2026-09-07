@@ -1,0 +1,16 @@
+--- a/net/minecraft/world/level/block/LanternBlock.java
++++ b/net/minecraft/world/level/block/LanternBlock.java
+@@ -66,6 +_,13 @@
+ 
+     @Override
+     protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
++        // Axium start - per-world update suppression
++        if (level instanceof net.minecraft.server.level.ServerLevel){
++            if(((net.minecraft.server.level.ServerLevel) level).paperConfig().updates.suppressBlockUpdates){
++                return true;
++            }
++        }
++        // Axium end
+         Direction opposite = getConnectedDirection(state).getOpposite();
+         return Block.canSupportCenter(level, pos.relative(opposite), opposite.getOpposite());
+     }

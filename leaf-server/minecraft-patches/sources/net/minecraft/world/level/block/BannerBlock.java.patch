@@ -1,0 +1,24 @@
+--- a/net/minecraft/world/level/block/BannerBlock.java
++++ b/net/minecraft/world/level/block/BannerBlock.java
+@@ -6,6 +_,7 @@
+ import java.util.Map;
+ import net.minecraft.core.BlockPos;
+ import net.minecraft.core.Direction;
++import net.minecraft.server.level.ServerLevel;
+ import net.minecraft.util.RandomSource;
+ import net.minecraft.world.item.DyeColor;
+ import net.minecraft.world.item.context.BlockPlaceContext;
+@@ -43,6 +_,13 @@
+ 
+     @Override
+     protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
++        // Axium start - per-world update suppression
++        if (level instanceof ServerLevel){
++            if(((ServerLevel) level).paperConfig().updates.suppressBlockUpdates){
++                return true;
++            }
++        }
++        // Axium end
+         return level.getBlockState(pos.below()).isSolid();
+     }
+ 

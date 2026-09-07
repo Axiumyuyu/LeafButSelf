@@ -32,10 +32,10 @@ The rooted dirt item drop logic is being processed in HoeItem#useOn, the drop ca
 This bug has existed since 1.19, after Mojang added the rooted dirt.
 
 diff --git a/net/minecraft/world/item/ItemStack.java b/net/minecraft/world/item/ItemStack.java
-index e20f3e99a8f56622d86af4acbd7aecdb0fa4e8e1..aa6ae443d5782652357bd94c982cd6d108569567 100644
+index 0e55be70476a4cd2436ae4219b0a6681abbdca98..c2de2ba34998156dc04febcd4eb1d8c2b596f363 100644
 --- a/net/minecraft/world/item/ItemStack.java
 +++ b/net/minecraft/world/item/ItemStack.java
-@@ -395,11 +395,23 @@ public final class ItemStack implements DataComponentHolder, net.caffeinemc.mods
+@@ -398,11 +398,23 @@ public final class ItemStack implements DataComponentHolder, net.caffeinemc.mods
                      serverLevel.captureTreeGeneration = true;
                  }
              }
@@ -59,7 +59,7 @@ index e20f3e99a8f56622d86af4acbd7aecdb0fa4e8e1..aa6ae443d5782652357bd94c982cd6d1
              }
              DataComponentPatch newPatch = this.components.asPatch();
              int newCount = this.getCount();
-@@ -434,6 +446,15 @@ public final class ItemStack implements DataComponentHolder, net.caffeinemc.mods
+@@ -437,6 +449,15 @@ public final class ItemStack implements DataComponentHolder, net.caffeinemc.mods
                          snapshot.place(snapshot.getFlags());
                          serverLevel.checkCapturedTreeStateForObserverNotify(clickedPos, snapshot); // Paper - notify observers even if grow failed
                      }
@@ -75,7 +75,7 @@ index e20f3e99a8f56622d86af4acbd7aecdb0fa4e8e1..aa6ae443d5782652357bd94c982cd6d1
                      player.awardStat(Stats.ITEM_USED.get(item)); // SPIGOT-7236 - award stat
                  }
  
-@@ -539,6 +560,14 @@ public final class ItemStack implements DataComponentHolder, net.caffeinemc.mods
+@@ -542,6 +563,14 @@ public final class ItemStack implements DataComponentHolder, net.caffeinemc.mods
                          serverLevel.playSound(player, clickedPos, soundType.getPlaceSound(), net.minecraft.sounds.SoundSource.BLOCKS, (soundType.getVolume() + 1.0F) / 2.0F, soundType.getPitch() * 0.8F);
                      }
  

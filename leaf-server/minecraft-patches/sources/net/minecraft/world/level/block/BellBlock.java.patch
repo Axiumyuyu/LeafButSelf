@@ -1,0 +1,16 @@
+--- a/net/minecraft/world/level/block/BellBlock.java
++++ b/net/minecraft/world/level/block/BellBlock.java
+@@ -252,6 +_,13 @@
+ 
+     @Override
+     protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
++        // Axium start - per-world update suppression
++        if (level instanceof ServerLevel){
++            if(((ServerLevel) level).paperConfig().updates.suppressBlockUpdates){
++                return true;
++            }
++        }
++        // Axium end
+         Direction opposite = getConnectedDirection(state).getOpposite();
+         return opposite == Direction.UP
+             ? Block.canSupportCenter(level, pos.above(), Direction.DOWN)

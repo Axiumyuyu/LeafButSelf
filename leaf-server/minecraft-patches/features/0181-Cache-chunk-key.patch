@@ -119,10 +119,10 @@ index 8a5c37cf572abc6b9526648d3c8ec92b7af37e3d..9294a23f0d2ed50cb04315cdfabb3b8a
          // Paper end - rewrite chunk system
      }
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index f73ddbdd8b8e27178844c9b68ab5932f5f857400..485a9804b8cfe517bdb16da44035a93e4768caef 100644
+index e212534ad6df3e7b7fc34be68a86d46943827eb6..795d3dc26db316c6ff2615b0aeda10571ba96b04 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -542,7 +542,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -576,7 +576,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
      @Override
      public final void moonrise$markChunkForPlayerTicking(final LevelChunk chunk) {
          final ChunkPos pos = chunk.getPos();
@@ -131,7 +131,7 @@ index f73ddbdd8b8e27178844c9b68ab5932f5f857400..485a9804b8cfe517bdb16da44035a93e
              return;
          }
  
-@@ -2780,7 +2780,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -2839,7 +2839,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
  
      public boolean areEntitiesActuallyLoadedAndTicking(ChunkPos chunkPos) {
          // Paper start - rewrite chunk system
@@ -140,7 +140,7 @@ index f73ddbdd8b8e27178844c9b68ab5932f5f857400..485a9804b8cfe517bdb16da44035a93e
          return chunkHolder != null && chunkHolder.isEntityTickingReady();
          // Paper end - rewrite chunk system
      }
-@@ -2800,7 +2800,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -2859,7 +2859,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
  
      public boolean canSpawnEntitiesInChunk(ChunkPos chunkPos) {
          // Paper start - rewrite chunk system

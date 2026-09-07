@@ -1,0 +1,81 @@
+--- a/net/minecraft/world/entity/raid/Raid.java
++++ b/net/minecraft/world/entity/raid/Raid.java
+@@ -245,7 +_,7 @@
+     }
+ 
+     public int getMaxRaidOmenLevel() {
+-        return 5;
++        return 15;
+     }
+ 
+     public int getRaidOmenLevel() {
+@@ -464,11 +_,11 @@
+     }
+ 
+     private boolean hasMoreWaves() {
+-        return this.hasBonusWave() ? !this.hasSpawnedBonusWave() : !this.isFinalWave();
++        return this.getGroupsSpawned() != this.numGroups + this.raidOmenLevel;
+     }
+ 
+     private boolean isFinalWave() {
+-        return this.getGroupsSpawned() == this.numGroups;
++        return this.getGroupsSpawned() == this.numGroups + this.raidOmenLevel;
+     }
+ 
+     private boolean hasBonusWave() {
+@@ -480,7 +_,7 @@
+     }
+ 
+     private boolean shouldSpawnBonusGroup() {
+-        return this.isFinalWave() && this.getTotalRaidersAlive() == 0 && this.hasBonusWave();
++        return this.getGroupsSpawned() < this.numGroups + this.raidOmenLevel && this.getTotalRaidersAlive() == 0 && this.hasBonusWave();
+     }
+ 
+     private void updateRaiders(ServerLevel level) {
+@@ -625,7 +_,7 @@
+     }
+ 
+     private boolean shouldSpawnGroup() {
+-        return this.raidCooldownTicks == 0 && (this.groupsSpawned < this.numGroups || this.shouldSpawnBonusGroup()) && this.getTotalRaidersAlive() == 0;
++        return this.raidCooldownTicks == 0 && ((this.groupsSpawned < this.numGroups + this.raidOmenLevel && this.shouldSpawnBonusGroup()) || (!this.shouldSpawnBonusGroup() && this.groupsSpawned < this.numGroups)) && this.getTotalRaidersAlive() == 0;
+     }
+ 
+     public int getTotalRaidersAlive() {
+@@ -775,10 +_,8 @@
+                 }
+                 break;
+             case EVOKER:
+-            default:
+-                return 0;
+             case WITCH:
+-                if (flag || wave <= 2 || wave == 4) {
++                if (flag || wave <= 2) {
+                     return 0;
+                 }
+ 
+@@ -786,6 +_,14 @@
+                 break;
+             case RAVAGER:
+                 i = !flag && shouldSpawnBonusGroup ? 1 : 0;
++            case ILLUSIONER:
++                if (wave > 3) {
++                    i = 2;
++                } else {
++                    i = 0;
++                }
++            default:
++                return 0;
+         }
+ 
+         return i > 0 ? random.nextInt(i + 1) : 0;
+@@ -851,7 +_,9 @@
+         EVOKER(EntityType.EVOKER, new int[]{0, 0, 0, 0, 0, 1, 1, 2}),
+         PILLAGER(EntityType.PILLAGER, new int[]{0, 4, 3, 3, 4, 4, 4, 2}),
+         WITCH(EntityType.WITCH, new int[]{0, 0, 0, 0, 3, 0, 0, 1}),
+-        RAVAGER(EntityType.RAVAGER, new int[]{0, 0, 0, 1, 0, 1, 0, 2});
++        RAVAGER(EntityType.RAVAGER, new int[]{0, 0, 0, 1, 0, 1, 0, 2}),
++
++        ILLUSIONER(EntityType.ILLUSIONER, new int[]{0, 0, 0, 1, 0, 1, 1, 2});
+ 
+         static final Raid.RaiderType[] VALUES = values();
+         final EntityType<? extends Raider> entityType;

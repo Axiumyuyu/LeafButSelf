@@ -27,10 +27,10 @@ index 83e02e02aa3a95acdc2bc914307d7577fec87e8f..551d189457c8a65763476edd84b50c15
          final ServerLevel world = this.level;
          final int randomTickSpeed = world.getGameRules().get(GameRules.RANDOM_TICK_SPEED);
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index d2ee918e1fcfdd3bc23b9f17ab9a367a5c0bd42e..a093cf90a3fe2cb7c1f00ef1735d04a662aa9acf 100644
+index 6d98011a3bca7cc93c33c407a873254aab2cb6dc..99da45d18d77032fc53840aa5ada4812eb11d418 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -981,7 +981,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -1015,7 +1015,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
      private void optimiseRandomTick(final LevelChunk chunk, final int tickSpeed) {
          final LevelChunkSection[] sections = chunk.getSections();
          final int minSection = ca.spottedleaf.moonrise.common.util.WorldUtil.getMinSection((ServerLevel)(Object)this);
@@ -39,7 +39,7 @@ index d2ee918e1fcfdd3bc23b9f17ab9a367a5c0bd42e..a093cf90a3fe2cb7c1f00ef1735d04a6
          final boolean doubleTickFluids = !ca.spottedleaf.moonrise.common.PlatformHooks.get().configFixMC224294();
  
          final ChunkPos cpos = chunk.getPos();
-@@ -1028,7 +1028,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -1062,7 +1062,7 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
      // Paper end - optimise random ticking
  
      public void tickChunk(LevelChunk chunk, int randomTickSpeed) {
@@ -152,10 +152,10 @@ index a253b02bb6e07ba4cdbd9320445a6b6c3e54ada2..1bfd7851cef198cfc06d6dbdf4fcd1e1
      public final Biome.ClimateSettings climateSettings;
      private final BiomeGenerationSettings generationSettings;
 diff --git a/net/minecraft/world/level/chunk/ChunkGenerator.java b/net/minecraft/world/level/chunk/ChunkGenerator.java
-index 9712ed7f71019d859bfa4979aa8f768127f43620..c14cd39f62b3a17874d449e3cac013e92f89251d 100644
+index 5ce7f3b9b599e4bcd6514c50bb29466ef8f655f6..5b8302777db94477cf42e837b0f6d53fbe76f614 100644
 --- a/net/minecraft/world/level/chunk/ChunkGenerator.java
 +++ b/net/minecraft/world/level/chunk/ChunkGenerator.java
-@@ -458,7 +458,7 @@ public abstract class ChunkGenerator {
+@@ -468,7 +468,7 @@ public abstract class ChunkGenerator {
              int x = chunk.getPos().x;
              int z = chunk.getPos().z;
              for (org.bukkit.generator.BlockPopulator populator : world.getPopulators()) {
@@ -164,7 +164,7 @@ index 9712ed7f71019d859bfa4979aa8f768127f43620..c14cd39f62b3a17874d449e3cac013e9
                  seededrandom.setDecorationSeed(level.getSeed(), x, z);
                  populator.populate(world, new org.bukkit.craftbukkit.util.RandomSourceWrapper.RandomWrapper(seededrandom), x, z, limitedRegion);
              }
-@@ -566,7 +566,7 @@ public abstract class ChunkGenerator {
+@@ -576,7 +576,7 @@ public abstract class ChunkGenerator {
                                  if (org.dreeam.leaf.config.modules.misc.SecureSeed.enabled) {
                                      worldgenRandom = new su.plo.matter.WorldgenCryptoRandom(pos.x, pos.z, su.plo.matter.Globals.Salt.GENERATE_FEATURE, 0);
                                  } else {

@@ -1,0 +1,75 @@
+--- a/net/minecraft/world/inventory/BrewingStandMenu.java
++++ b/net/minecraft/world/inventory/BrewingStandMenu.java
+@@ -88,30 +_,23 @@
+             ItemStack item = slot.getItem();
+             itemStack = item.copy();
+             if ((slotIndex < 0 || slotIndex > 2) && slotIndex != 3 && slotIndex != 4) {
+-                if (BrewingStandMenu.FuelSlot.mayPlaceItem(itemStack)) {
+-                    if (this.moveItemStackTo(item, 4, 5, false) || this.ingredientSlot.mayPlace(item) && !this.moveItemStackTo(item, 3, 4, false)) {
+-                        return ItemStack.EMPTY;
+-                    }
+-                } else if (this.ingredientSlot.mayPlace(item)) {
+-                    if (!this.moveItemStackTo(item, 3, 4, false)) {
+-                        return ItemStack.EMPTY;
+-                    }
+-                } else if (BrewingStandMenu.PotionSlot.mayPlaceItem(itemStack, this.inventory.player.level().potionBrewing())) { // Paper - custom potion mixes
+-                    if (!this.moveItemStackTo(item, 0, 3, false)) {
+-                        return ItemStack.EMPTY;
+-                    }
+-                } else if (slotIndex >= 5 && slotIndex < 32) {
+-                    if (!this.moveItemStackTo(item, 32, 41, false)) {
+-                        return ItemStack.EMPTY;
+-                    }
+-                } else if (slotIndex >= 32 && slotIndex < 41) {
+-                    if (!this.moveItemStackTo(item, 5, 32, false)) {
+-                        return ItemStack.EMPTY;
+-                    }
+-                } else if (!this.moveItemStackTo(item, 5, 41, false)) {
+-                    return ItemStack.EMPTY;
++                // 从背包/快捷栏往酿造台送：不再按类型分类，直接按 0→4 顺序尝试
++                if (!this.moveItemStackTo(item, 0, 5, false)) {
++                    // 酿造台放不进，继续在背包内部移动
++                    if (slotIndex >= 5 && slotIndex < 32) {
++                        if (!this.moveItemStackTo(item, 32, 41, false)) {
++                            return ItemStack.EMPTY;
++                        }
++                    } else if (slotIndex >= 32 && slotIndex < 41) {
++                        if (!this.moveItemStackTo(item, 5, 32, false)) {
++                            return ItemStack.EMPTY;
++                        }
++                    } else if (!this.moveItemStackTo(item, 5, 41, false)) {
++                        return ItemStack.EMPTY;
++                    }
+                 }
+             } else {
++                // 从酿造台往背包送
+                 if (!this.moveItemStackTo(item, 5, 41, true)) {
+                     return ItemStack.EMPTY;
+                 }
+@@ -150,7 +_,7 @@
+ 
+         @Override
+         public boolean mayPlace(ItemStack stack) {
+-            return mayPlaceItem(stack);
++            return true;
+         }
+ 
+         public static boolean mayPlaceItem(ItemStack stack) {
+@@ -173,7 +_,7 @@
+ 
+         @Override
+         public boolean mayPlace(ItemStack stack) {
+-            return this.potionBrewing.isIngredient(stack);
++            return true;
+         }
+     }
+ 
+@@ -186,7 +_,7 @@
+ 
+         @Override
+         public boolean mayPlace(ItemStack stack) {
+-            return mayPlaceItem(stack, this.potionBrewing); // Paper - custom potion mixes
++            return true; // Paper - custom potion mixes
+         }
+ 
+         @Override

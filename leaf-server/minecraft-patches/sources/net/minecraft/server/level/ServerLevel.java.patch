@@ -1,0 +1,96 @@
+--- a/net/minecraft/server/level/ServerLevel.java
++++ b/net/minecraft/server/level/ServerLevel.java
+@@ -233,6 +_,40 @@
+     public @Nullable LevelChunk getChunkIfLoaded(int x, int z) {
+         return this.chunkSource.getChunkAtIfLoadedImmediately(x, z); // Paper - Use getChunkIfLoadedImmediately
+     }
++    
++    // Axium start - per-world update suppression
++    @Override
++    public void scheduleTick(BlockPos pos, Block block, int delay, net.minecraft.world.ticks.TickPriority priority) {
++        if (this.paperConfig().updates.suppressBlockUpdates) {
++            return;
++        }
++        this.getBlockTicks().schedule(this.createTick(pos, block, delay, priority));
++    }
++
++    @Override
++    public void scheduleTick(BlockPos pos, Block block, int delay) {
++        if (this.paperConfig().updates.suppressBlockUpdates) {
++            return;
++        }
++        this.getBlockTicks().schedule(this.createTick(pos, block, delay));
++    }
++
++    @Override
++    public void scheduleTick(BlockPos pos, Fluid fluid, int delay, net.minecraft.world.ticks.TickPriority priority) {
++        if (this.paperConfig().updates.suppressBlockUpdates) {
++            return;
++        }
++        this.getFluidTicks().schedule(this.createTick(pos, fluid, delay, priority));
++    }
++
++    @Override
++    public void scheduleTick(BlockPos pos, Fluid fluid, int delay) {
++        if (this.paperConfig().updates.suppressBlockUpdates) {
++            return;
++        }
++        this.getFluidTicks().schedule(this.createTick(pos, fluid, delay));
++    }
++    // Axium end
+ 
+     @Override
+     public ResourceKey<LevelStem> getTypeKey() {
+@@ -1858,27 +_,52 @@
+         }
+         // CraftBukkit end
+         if (captureBlockStates) { return; } // Paper - Cancel all physics during placement
++        // Axium start - per-world update suppression
++        if (this.paperConfig().updates.suppressBlockUpdates) {
++            return;
++        }
++        // Axium end
+         this.updateNeighborsAt(pos, block, ExperimentalRedstoneUtils.initialOrientation(this, null, null));
+     }
+ 
+     @Override
+     public void updateNeighborsAt(BlockPos pos, Block block, @Nullable Orientation orientation) {
+         if (captureBlockStates) { return; } // Paper - Cancel all physics during placement
++        // Axium start - per-world update suppression
++        if (this.paperConfig().updates.suppressBlockUpdates) {
++            return;
++        }
++        // Axium end
+         this.neighborUpdater.updateNeighborsAtExceptFromFacing(pos, block, null, orientation);
+     }
+ 
+     @Override
+     public void updateNeighborsAtExceptFromFacing(BlockPos pos, Block block, Direction facing, @Nullable Orientation orientation) {
++        // Axium start - per-world update suppression
++        if (this.paperConfig().updates.suppressBlockUpdates) {
++            return;
++        }
++        // Axium end
+         this.neighborUpdater.updateNeighborsAtExceptFromFacing(pos, block, facing, orientation);
+     }
+ 
+     @Override
+     public void neighborChanged(BlockPos pos, Block block, @Nullable Orientation orientation) {
++        // Axium start - per-world update suppression
++        if (this.paperConfig().updates.suppressBlockUpdates) {
++            return;
++        }
++        // Axium end
+         this.neighborUpdater.neighborChanged(pos, block, orientation);
+     }
+ 
+     @Override
+     public void neighborChanged(BlockState state, BlockPos pos, Block block, @Nullable Orientation orientation, boolean movedByPiston) {
++        // Axium start - per-world update suppression
++        if (this.paperConfig().updates.suppressBlockUpdates) {
++            return;
++        }
++        // Axium end
+         this.neighborUpdater.neighborChanged(state, pos, block, orientation, movedByPiston);
+     }
+ 

@@ -23,10 +23,10 @@ index f0dde37856965acf0a3ca54be9d4a3c08f918400..20cf0022566bc1ba1c0b1ce5d749f616
                  this.tickChunks(profilerFiller, l);
                  profilerFiller.pop();
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index fba220939c6ba93e04642d6e712e538ef085fa80..090432a62540174dca6f46bbec5e27c6611a074c 100644
+index 662a53c58bb47ad923cb97f8043ec2e38a9950de..a79cb1c24766bd0b3993e31a631dc0b955ca977f 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -1077,9 +1077,12 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
+@@ -1111,9 +1111,12 @@ public class ServerLevel extends Level implements ServerEntityGetter, WorldGenLe
                          }
                      }
                  );
